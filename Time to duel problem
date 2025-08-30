@@ -1,0 +1,9 @@
+def is_there_a_liar(n, reports):
+    return "YES" if sum(reports) > n - 1 else "NO"
+
+# Example usage:
+t = int(input())
+for _ in range(t):
+    n = int(input())
+    reports = list(map(int, input().split()))
+    print(is_there_a_liar(n, reports))
