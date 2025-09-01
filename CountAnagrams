@@ -1,0 +1,30 @@
+from collections import Counter
+
+class Solution:
+    def countAnagrams(self, s: str) -> int:
+        MOD = 10**9 + 7
+
+        def modinv(x):
+            return pow(x, MOD - 2, MOD)
+
+        max_len = len(s)
+        fact = [1] * (max_len + 1)
+        inv_fact = [1] * (max_len + 1)
+
+        for i in range(1, max_len + 1):
+            fact[i] = fact[i - 1] * i % MOD
+        for i in range(1, max_len + 1):
+            inv_fact[i] = modinv(fact[i])
+
+        def word_permutations(word):
+            freq = Counter(word)
+            res = fact[len(word)]
+            for count in freq.values():
+                res = res * inv_fact[count] % MOD
+            return res
+
+        result = 1
+        for word in s.split():
+            result = result * word_permutations(word) % MOD
+
+        return result
